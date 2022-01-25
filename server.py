@@ -52,9 +52,12 @@ def purchasePlaces():
         if placesRequired > int(club['points']):
             flash('ERROR : your points balance is too low')
         else:
-            competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-            club['points'] = int(club['points'])-placesRequired
-            flash('Great-booking complete!')
+            if placesRequired > int(competition['numberOfPlaces']):
+                flash('ERROR : you can t book more places than the number available')
+            else:
+                competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+                club['points'] = int(club['points'])-placesRequired
+                flash('Great-booking complete!')
     else:
         flash('ERROR : You can only reserve a maximum of 12 places')
     return render_template('welcome.html', club=club, competitions=competitions)
