@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -48,15 +49,18 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    if placesRequired < 13:
-        if placesRequired > int(club['points']):
-            flash('ERROR : your points balance is too low')
-        else:
-            competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-            club['points'] = int(club['points'])-placesRequired
-            flash('Great-booking complete!')
+    if datetime.now() > datetime.strptime(competition['date'], "%Y-%m-%d %H:%M:%S"):
+        flash("ERROR : you can t purchase places, it's a past competition")
     else:
-        flash('ERROR : You can only reserve a maximum of 12 places')
+        if placesRequired < 13:
+            if placesRequired > int(club['points']):
+                flash('ERROR : your points balance is too low')
+            else:
+                competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+                club['points'] = int(club['points'])-placesRequired
+                flash('Great-booking complete!')
+        else:
+            flash('ERROR : You can only reserve a maximum of 12 places')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
