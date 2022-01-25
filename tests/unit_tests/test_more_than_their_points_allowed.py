@@ -1,4 +1,3 @@
-
 def test_purchase_less_than_their_points_allowed(client):
     response = client.post('/purchasePlaces', data={'club': 'Iron Temple', 'competition': 'Spring Festival',
                                                     'places': '3'})
