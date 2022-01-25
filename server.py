@@ -53,6 +53,7 @@ def purchasePlaces():
             flash('ERROR : your points balance is too low')
         else:
             competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+            club['points'] = int(club['points'])-placesRequired
             flash('Great-booking complete!')
     else:
         flash('ERROR : You can only reserve a maximum of 12 places')
