@@ -1,7 +1,7 @@
-from tests.utils import mock_competitions
+from tests.utils import mock_competitions_n_clubs
 
 
-def test_being_able_to_book_for_past_competition(client, mock_competitions):
+def test_being_able_to_book_for_past_competition(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'She Lifts', 'competition': 'Back to the Future',
                                                     'places': '4'})
     response_data = response.data.decode()
@@ -9,7 +9,7 @@ def test_being_able_to_book_for_past_competition(client, mock_competitions):
     assert "Great-booking complete!" in response_data
 
 
-def test_not_being_able_to_book_for_past_competition(client, mock_competitions):
+def test_not_being_able_to_book_for_past_competition(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'She Lifts', 'competition': 'Spring Festival',
                                                     'places': '4'})
     response_data = response.data.decode()

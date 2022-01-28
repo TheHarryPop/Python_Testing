@@ -17,12 +17,34 @@ def mock_loadCompetitions():
         {
             "name": "Back to the Future",
             "date": "2985-10-26 00:00:00",
-            "numberOfPlaces": "30"
+            "numberOfPlaces": "13"
         }
     ]
     return competitions
 
 
+def mock_loadClubs():
+    clubs = [
+        {
+            "name": "Simply Lift",
+            "email": "john@simplylift.co",
+            "points": "13"
+        },
+        {
+            "name": "Iron Temple",
+            "email": "admin@irontemple.com",
+            "points": "4"
+        },
+        {
+            "name": "She Lifts",
+            "email": "kate@shelifts.co.uk",
+            "points": "12"
+        }
+    ]
+    return clubs
+
+
 @pytest.fixture
-def mock_competitions(mocker):
+def mock_competitions_n_clubs(mocker):
     mocker.patch.object(server, 'competitions', mock_loadCompetitions())
+    mocker.patch.object(server, 'clubs', mock_loadClubs())
