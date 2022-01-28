@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask,render_template,request,redirect,flash,url_for
 
 
 def loadClubs():
@@ -37,7 +37,7 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition, club):
+def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
@@ -60,17 +60,19 @@ def purchasePlaces():
                 flash('ERROR : your points balance is too low')
             else:
                 if placesRequired > int(competition['numberOfPlaces']):
-                flash('ERROR : you can t book more places than the number available')
+                    flash('ERROR : you can t book more places than the number available')
                 else:
                     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
                     club['points'] = int(club['points'])-placesRequired
                     flash('Great-booking complete!')
-    else:
-        flash('ERROR : You can only reserve a maximum of 12 places')
+        else:
+            flash('ERROR : You can only reserve a maximum of 12 places')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
-# TODO: Add route for points display
+@app.route('/displayBoard', methods=['GET'])
+def display_board():
+    return render_template('display_board.html', clubs=clubs)
 
 
 @app.route('/logout')
@@ -78,5 +80,5 @@ def logout():
     return redirect(url_for('index'))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
