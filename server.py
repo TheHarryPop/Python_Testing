@@ -51,19 +51,23 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+    try:
+        club[f"{competition['name']}_history"]
+    except KeyError:
+        club[f"{competition['name']}_history"] = 0
     placesRequired = int(request.form['places'])
     if datetime.now() > datetime.strptime(competition['date'], "%Y-%m-%d %H:%M:%S"):
         flash("ERROR : you can t purchase places, it's a past competition")
     else:
-        if placesRequired < 13:
+        if placesRequired + club[f"{competition['name']}_history"] < 13:
             if placesRequired > int(club['points']):
                 flash('ERROR : your points balance is too low')
             else:
                 if placesRequired > int(competition['numberOfPlaces']):
                     flash('ERROR : you can t book more places than the number available')
                 else:
-                    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-                    club['points'] = int(club['points'])-placesRequired
+                    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
+                    club[f"{competition['name']}_history"] += placesRequired
                     flash('Great-booking complete!')
         else:
             flash('ERROR : You can only reserve a maximum of 12 places')
