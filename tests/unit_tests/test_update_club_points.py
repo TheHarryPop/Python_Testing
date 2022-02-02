@@ -1,4 +1,7 @@
-def test_update_club_points(client):
+from tests.utils import mock_competitions_n_clubs
+
+
+def test_update_club_points(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'She Lifts', 'competition': 'Spring Festival',
                                                     'places': '4'})
     response_data = response.data.decode()
