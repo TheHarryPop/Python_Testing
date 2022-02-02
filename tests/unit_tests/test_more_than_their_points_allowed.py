@@ -1,4 +1,7 @@
-def test_purchase_less_than_their_points_allowed(client):
+from tests.utils import mock_competitions_n_clubs
+
+
+def test_purchase_less_than_their_points_allowed(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'Iron Temple', 'competition': 'Spring Festival',
                                                     'places': '3'})
     response_data = response.data.decode()
@@ -6,7 +9,7 @@ def test_purchase_less_than_their_points_allowed(client):
     assert 'Great-booking complete!' in response_data
 
 
-def test_purchase_their_points_allowed(client):
+def test_purchase_their_points_allowed(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'Iron Temple', 'competition': 'Spring Festival',
                                                     'places': '4'})
     response_data = response.data.decode()
@@ -14,7 +17,7 @@ def test_purchase_their_points_allowed(client):
     assert 'Great-booking complete!' in response_data
 
 
-def test_purchase_more_than_their_points_allowed(client):
+def test_purchase_more_than_their_points_allowed(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'Iron Temple', 'competition': 'Spring Festival',
                                                     'places': '9'})
     response_data = response.data.decode()
