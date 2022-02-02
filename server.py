@@ -67,6 +67,7 @@ def purchasePlaces():
                     flash('ERROR : you can t book more places than the number available')
                 else:
                     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
+                    club['points'] = int(club['points']) - placesRequired
                     club[f"{competition['name']}_history"] += placesRequired
                     flash('Great-booking complete!')
         else:
