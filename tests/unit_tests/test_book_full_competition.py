@@ -1,4 +1,7 @@
-def test_not_being_able_to_book_a_full_competition(client):
+from tests.utils import mock_competitions_n_clubs
+
+
+def test_not_being_able_to_book_a_full_competition(client, mock_competitions_n_clubs):
     response = client.post('/purchasePlaces', data={'club': 'She Lifts', 'competition': 'Fall Classic',
                                                     'places': '12'})
     response = client.post('/purchasePlaces', data={'club': 'Simply Lift', 'competition': 'Fall Classic',
