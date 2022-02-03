@@ -28,17 +28,17 @@ def mock_loadClubs():
         {
             "name": "Simply Lift",
             "email": "john@simplylift.co",
-            "points": "13"
+            "points": "21"
         },
         {
             "name": "Iron Temple",
             "email": "admin@irontemple.com",
-            "points": "4"
+            "points": "12"
         },
         {
             "name": "She Lifts",
             "email": "kate@shelifts.co.uk",
-            "points": "12"
+            "points": "50"
         }
     ]
     return clubs

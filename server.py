@@ -60,14 +60,14 @@ def purchasePlaces():
         flash("ERROR : you can t purchase places, it's a past competition")
     else:
         if placesRequired + club[f"{competition['name']}_history"] < 13:
-            if placesRequired > int(club['points']):
+            if placesRequired * 3 > int(club['points']):
                 flash('ERROR : your points balance is too low')
             else:
                 if placesRequired > int(competition['numberOfPlaces']):
                     flash('ERROR : you can t book more places than the number available')
                 else:
                     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
-                    club['points'] = int(club['points']) - placesRequired
+                    club['points'] = int(club['points']) - placesRequired * 3
                     club[f"{competition['name']}_history"] += placesRequired
                     flash('Great-booking complete!')
         else:
